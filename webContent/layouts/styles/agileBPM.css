@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+body, html, td, tr, th, input, textarea, select, form, div {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 9pt;
+}
+
+.ui-outputlabel {
+  display: inline;
+}
+
+body .ui-panel .ui-panel-content {
+  border: 0px;
+  padding: .1rem;
+}
+
+.container td {
+  padding: 0.3em;
+}
+
+.ui-avatar-lg {
+  height: 60px;
+  width: 60px;
+}
+
+.ui-avatar-lg img {
+  border-radius: 30px;
+}
+
+body .ui-avatar {
+  background-color: var(--surface-a);
+  border-radius: 0px;
+}
+
+.circularImg {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  overflow: hidden;
+}
+
+.circularGroupImg {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  overflow: hidden;
+}
+
+.flowpanelHot {
+  border: 2px solid;
+  border-radius: 4px;
+  border-color: var(--primary-light-color);
+  height: 80px;
+}
+
+.flowpanel {
+  border: 1px solid;
+  border-radius: 4px;
+  border-color: var(--primary-color);
+  height: 80px;
+}
+
+.taskpanel {
+  border: 1px solid;
+  border-color: var(--primary-color);
+}
+
+.iconButton {
+  border: 0px;
+}
+
+.flowpanelButton {
+  border: 0px;
+}
+
+.xbutton {
+  background-color: var(--primary-darker-color);
+  float: right;
+}
