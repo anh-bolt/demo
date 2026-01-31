@@ -1,66 +1,4 @@
-Categories:
-  notification:
-    cssIcon: si si-messages-bubble
-    name: 8. Notification
 Dialogs:
-  agileBPM:
-    define_WF:
-      AddTask: Aufgabe zum Ablauf hinzufügen
-      AdhocWorkflowTasks: Workflow Aufgaben
-      Case: Fall
-      CommaSeparatedListOfUsers: 'Komma getrennte Liste von Benutzern:'
-      Creator: ERSTELLER
-      DeleteStep: Diesen Schritt löschen
-      Details: Details
-      ForwardTo: 'Weiterleiten an:'
-      Ok: OK
-      PatternAdHoc: Ad-Hoc
-      PatternApproval: Freigabe
-      PatternQA: Frage-Antwort
-      PatternTodo: ToDo
-      ResponsableUsers: Verantwortlicher Benutzer
-      SequenceOfTasks: Nachfolgende Aufgaben
-      ShowDetails: Zeige Details zu den Vorlagen
-      StartWF: Workflow starten
-      TaskActor: Ausführender Benutzer
-      TaskDescription: Beschreibung der Aufgabe
-      TaskSubject: Name der Aufgabe
-      WFAttachment: Anhang
-      WFCategory: Kategorie
-      WFDescription: Beschreibung
-      WFPattern: Vorlage
-      WFSubject: Betreff
-      WFUser: WF Benutzer
-      Workflow: Workflow
-      YourComment: Ihr Kommentar
-    task_Form:
-      AddAdHocTask: Ad-Hoc Aufgabe hinzufügen
-      Append: Anfügen
-      AppendATaskAfter: Eine Aufgabe im Ablauf nach meiner Aufgabe einfügen.
-      AssignTo: Zuweisen an
-      Attachment: Anhang
-      Case: Fall
-      ConfirmTodo: Todo erledigt
-      Deadline: Frist
-      Decision: Entscheidung
-      Decline: Ablehnen
-      DeclineTodo: Aufgabe ablehnen
-      DeleteTask: Aufgabe löschen
-      Description: Beschreibung
-      Done: Erledigt
-      Finish: Beenden
-      FollowUpQuestion: Anschlussfrage
-      InsertATaskBefore: Aufgabe vor meiner Aufgabe einfügen. Meine Aufgabe wird zurückgestellt.
-      MyAnswer: Meine Antwort
-      MyTaskIsDoneAnd: Meine Aufgabe ist erledigt und eine neue Aufgabe wurde angefügt
-      NoNOK: Nein, nicht ok
-      Remarks: Anmerkungen
-      Send: Senden
-      Task: Aufgabe
-      Workflow: Workflow
-      YesOK: Ja, ok
-      YourComment: Ihr Kommentar
-      YourDecision: Ihre Entscheidung
   general:
     name: Name
     proceed: Durchführen
@@ -87,28 +25,6 @@ Dialogs:
     verify: Prüfen
     verifyDescription: 'Der nachfolgende Beschaffungsantrag muss geprüft werden:'
     verifyTitle: Beschaffungsantrag prüfen
-  signal:
-    CreateUserDescription: Bitte geben Sie die Daten des neuen Mitarbeiters ein.
-    CreateUserTitle: Neuer Mitarbeiter
-    Finish: Beenden
-    QuitSignalSent: Mitarbeiter erfolgreich ausgetreten.
-    QuitUserDescription: Bitte geben Sie die Benutzerkennung des austretenden Mitarbeiters an.
-    QuitUserTitle: Mitarbeiteraustritt
-    city: Stadt
-    createProcesses: Prozesse erstellen
-    name: Name
-    reason: Begründung
-    street: Strasse
-    userKey: Benutzerkennung
-  trigger:
-    dateOfBirth: Geburtsdatum
-    email: E-Mail
-    employee: Mitarbeiter
-    isNotAValidEmailAddress: E-Mail-Adresse ungültig
-    newEmployeeTitle: Neuer Mitarbeiter
-    parkingLotNeeded: Parkplatz benötigt
-    parkingLotNr: Parkplatznr.
-    selectParkingLot: Parkplatz auswählen
 Emails:
   accepted: akzeptiert
   confirmParkingLot: "<H1>\nHallo <%=in.name%>\n</H1>\n<P>\nDer Parkplatz Nr. <%=in.selectedParkingLotNr%> wurde für Sie reserviert. \n</P>\n<P>\nWir wünschen Ihnen einen schönen Tag.\n</P>\n"
@@ -128,19 +44,6 @@ Labels:
   InsertTheTask: Aufgabe einfügen
   TaskUser-Explain: Komma getrennte Liste von Benutzern
   title: Self Service Ad-Hoc Workflow
-Notification:
-  business:
-    Messages:
-      InvoiceSent: Die Rechnung für die Bestellung {0} wurde versendet
-      OrderDelivered: Bestellung {0} wurde an Kunde {1} {2} ausgeliefert
-      OrderFinished: Die Bestellung {0} wurde erfolgreich abgeschlossen
-    Templates:
-      Order:
-        Labels:
-          Customer: Kunde
-          Greeting: 'Hallo '
-          Message: Meldung
-          Title: Bestellungsinformation
 TaskDescriptions:
   DeliverKeyCardDesc: Bitte liefern Sie die Schlüsselkarte aus für
   acceptRequest: Antrag annehmen
