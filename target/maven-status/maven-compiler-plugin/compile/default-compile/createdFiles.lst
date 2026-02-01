@@ -4,7 +4,6 @@ workflow\humantask\ProcurementRequest.class
 workflow\businessdata\CreateAddress\CreateAddressData.class
 workflow\signal\QuitUserProcess.class
 workflow\trigger\CreateNewEmployee\CreateNewEmployeeData.class
-ch\ivyteam\ivy\Helper.class
 workflow\agileBPM\task_Form\task_FormData.class
 workflow\order\DeliverOrder\DeliverOrderData.class
 workflow\agileBPM\test\testData.class
@@ -16,7 +15,6 @@ workflow\businesscasedata\InterviewForm\InterviewFormData.class
 workflow\signal\CreateUserProcess.class
 workflow\businessdata\Person.class
 workflow\order\InputOrder\InputOrderData.class
-ch\ivyteam\ivy\wfdemo\businessdata\AbstractBusinessDataLazyDataModel.class
 workflow\agileBPM\define_WF\define_WFData.class
 workflow\businessdata\ViewAddress\ViewAddressData.class
 workflow\humantask\VerifyRequest\VerifyRequestData.class
@@ -32,7 +30,6 @@ workflow\businessdata\ModifyAddress\ModifyAddressData.class
 workflow\credit\ApproveLevel2\ApproveLevel2Data.class
 workflow\credit\Person.class
 workflow\trigger\NewEmployeeData.class
-ch\ivyteam\ivy\wfdemo\businessdata\DemoDataCreator.class
 workflow\humantask\AcceptRequest\AcceptRequestData.class
 workflow\credit\Address.class
 workflow\order\BookPayment\BookPaymentData.class
@@ -43,11 +40,8 @@ workflow\agileBPM\CaseDef.class
 workflow\businesscasedata\Data.class
 workflow\businessdata\Dossier.class
 workflow\businesscasedata\InterviewLazyBrowser\InterviewLazyBrowserData.class
-ch\ivyteam\ivy\wfdemo\businessdata\InterviewLazyDataModel.class
 workflow\credit\Decision.class
 workflow\humantask\LogEntry.class
-ch\ivyteam\ivy\wfdemo\businessdata\DossierLazyDataModel.class
-ch\ivyteam\ivy\wfdemo\maintenance\CaseChore.class
 workflow\humantask\RequestLog\RequestLogData.class
 workflow\signal\TaskForm\TaskFormData.class
 workflow\businessdata\BusinessDataDossierBrowser\BusinessDataDossierBrowserData.class
@@ -62,5 +56,4 @@ workflow\businessdata\BusinessDataDossierModifier\BusinessDataDossierModifierDat
 workflow\businessdata\BusinessDataDossierLazyBrowser\BusinessDataDossierLazyBrowserData.class
 workflow\humantask\EnterRequest\EnterRequestData.class
 workflow\credit\CreditRequest.class
-ch\ivyteam\ivy\SystemDo.class
 workflow\businesscasedata\Interview.class
