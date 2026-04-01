@@ -1,0 +1,162 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0-dev/project/process.json",
+  "id" : "18A1B2C3D4E5F601",
+  "kind" : "HTML_DIALOG",
+  "config" : {
+    "data" : "com.axonivy.leaveRequest.SubmitLeaveRequest.SubmitLeaveRequestData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "HtmlDialogStart",
+      "name" : "start()",
+      "config" : {
+        "signature" : "start",
+        "result" : {
+          "params" : [
+            { "name" : "leaveRequest", "type" : "com.axonivy.leaveRequest.LeaveRequest", "desc" : "" }
+          ],
+          "map" : {
+            "result.leaveRequest" : "in.leaveRequest"
+          }
+        },
+        "guid" : "18A1B2C3D4E5F602"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f11", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "Script",
+      "name" : "Init employee data",
+      "config" : {
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.leaveRequest" : "new com.axonivy.leaveRequest.LeaveRequest()",
+            "out.today" : "java.time.LocalDate.now()"
+          },
+          "code" : [
+            "out.leaveRequest.setEmployeeId(ivy.session.getSessionUser().getMemberName());",
+            "out.leaveRequest.setEmployeeName(ivy.session.getSessionUser().getFullName());",
+            "out.leaveRequest.setEmployeeEmail(ivy.session.getSessionUser().getEMailAddress());"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 256, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f12", "to" : "f2" }
+      ]
+    }, {
+      "id" : "f2",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 416, "y" : 64 }
+      }
+    }, {
+      "id" : "f3",
+      "type" : "HtmlDialogMethodStart",
+      "name" : "calculateDays()",
+      "config" : {
+        "signature" : "calculateDays",
+        "guid" : "18A1B2C3D4E5F603"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 192 }
+      },
+      "connect" : [
+        { "id" : "f13", "to" : "f4" }
+      ]
+    }, {
+      "id" : "f4",
+      "type" : "Script",
+      "name" : "Calculate number of days",
+      "config" : {
+        "output" : {
+          "code" : [
+            "if (in.leaveRequest.getStartDate() != null && in.leaveRequest.getEndDate() != null) {",
+            "  Long days = java.time.temporal.ChronoUnit.DAYS.between(in.leaveRequest.getStartDate(), in.leaveRequest.getEndDate()) + 1;",
+            "  in.leaveRequest.setNumberOfDays(days.intValue());",
+            "} else {",
+            "  in.leaveRequest.setNumberOfDays(0);",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 288, "y" : 192 }
+      },
+      "connect" : [
+        { "id" : "f14", "to" : "f5" }
+      ]
+    }, {
+      "id" : "f5",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 480, "y" : 192 }
+      }
+    }, {
+      "id" : "f6",
+      "type" : "HtmlDialogEventStart",
+      "name" : "submit",
+      "config" : {
+        "guid" : "18A1B2C3D4E5F604"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 320 }
+      },
+      "connect" : [
+        { "id" : "f15", "to" : "f7" }
+      ]
+    }, {
+      "id" : "f7",
+      "type" : "Script",
+      "name" : "Set system fields",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.leaveRequest.model.LeaveStatus;",
+            "",
+            "in.leaveRequest.setRequestId(java.util.UUID.randomUUID().toString());",
+            "in.leaveRequest.setCreatedDate(java.time.LocalDateTime.now());",
+            "in.leaveRequest.setStatus(LeaveStatus.SUBMITTED);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 288, "y" : 320 }
+      },
+      "connect" : [
+        { "id" : "f16", "to" : "f8" }
+      ]
+    }, {
+      "id" : "f8",
+      "type" : "HtmlDialogExit",
+      "visual" : {
+        "at" : { "x" : 480, "y" : 320 }
+      }
+    }, {
+      "id" : "f9",
+      "type" : "HtmlDialogEventStart",
+      "name" : "cancel",
+      "config" : {
+        "guid" : "18A1B2C3D4E5F605"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 448 }
+      },
+      "connect" : [
+        { "id" : "f17", "to" : "f10" }
+      ]
+    }, {
+      "id" : "f10",
+      "type" : "HtmlDialogExit",
+      "visual" : {
+        "at" : { "x" : 288, "y" : 448 }
+      }
+    } ]
+}

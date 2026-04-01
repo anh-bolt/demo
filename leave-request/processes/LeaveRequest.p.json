@@ -1,0 +1,107 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/14.0-dev/project/process.json",
+  "id" : "18A1B2C3D4E5F610",
+  "config" : {
+    "data" : "com.axonivy.leaveRequest.LeaveRequest"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "RequestStart",
+      "name" : "start.ivp",
+      "config" : {
+        "signature" : "start",
+        "request" : {
+          "name" : "Submit Leave Request",
+          "description" : "Submit a new leave request for approval"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f6", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "DialogCall",
+      "name" : "Submit Leave Request",
+      "config" : {
+        "dialog" : "com.axonivy.leaveRequest.SubmitLeaveRequest:start()",
+        "output" : {
+          "map" : {
+            "out" : "result.leaveRequest"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 256, "y" : 64 },
+        "size" : { "width" : 128 }
+      },
+      "connect" : [
+        { "id" : "f7", "to" : "f2" }
+      ]
+    }, {
+      "id" : "f2",
+      "type" : "Alternative",
+      "name" : "Submitted?",
+      "config" : {
+        "conditions" : {
+          "f8" : "in.requestId != null"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 448, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f8", "to" : "f3", "label" : {
+            "name" : "Yes"
+          } },
+        { "id" : "f9", "to" : "f5", "via" : [ { "x" : 448, "y" : 192 } ], "label" : {
+            "name" : "No"
+          } }
+      ]
+    }, {
+      "id" : "f3",
+      "type" : "TaskSwitchEvent",
+      "name" : "Line Manager Review",
+      "config" : {
+        "task" : {
+          "name" : "Review Leave Request: <%= in.employeeName %>",
+          "description" : "Review the leave request submitted by <%= in.employeeName %>",
+          "responsible" : {
+            "type" : "ROLE_FROM_ATTRIBUTE",
+            "script" : "\"LeaveRequest/LineManagers\""
+          },
+          "expiry" : {
+            "timeout" : "new Duration(\"2D\")"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 608, "y" : 64 }
+      },
+      "connect" : [
+        { "id" : "f10", "to" : "f4" }
+      ]
+    }, {
+      "id" : "f4",
+      "type" : "TaskEnd",
+      "name" : "End",
+      "visual" : {
+        "at" : { "x" : 768, "y" : 64 }
+      }
+    }, {
+      "id" : "f5",
+      "type" : "TaskEnd",
+      "name" : "Cancelled",
+      "visual" : {
+        "at" : { "x" : 608, "y" : 192 }
+      }
+    } ],
+  "layout" : {
+    "lanes" : [ {
+        "name" : "Leave Request",
+        "size" : 320
+      } ]
+  }
+}

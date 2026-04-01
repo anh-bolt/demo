@@ -1,0 +1,28 @@
+Dialogs:
+  com:
+    axonivy:
+      leaveRequest:
+        SubmitLeaveRequest:
+          title: Submit Leave Request
+          employeeInfo: Employee Information
+          employeeId: Employee ID
+          employeeName: Employee Name
+          employeeEmail: Employee Email
+          leaveDetails: Leave Details
+          leaveType: Leave Type
+          selectLeaveType: '-- Select Leave Type --'
+          startDate: Start Date
+          endDate: End Date
+          numberOfDays: Number of Days
+          reason: Reason
+
+Labels:
+  Cancel: Cancel
+  Submit: Submit
+  LeaveType:
+    ANNUAL_LEAVE: Annual Leave
+    SICK_LEAVE: Sick Leave
+    UNPAID_LEAVE: Unpaid Leave
+    PARENTAL_LEAVE: Parental Leave
+    BEREAVEMENT_LEAVE: Bereavement Leave
+    OTHER: Other

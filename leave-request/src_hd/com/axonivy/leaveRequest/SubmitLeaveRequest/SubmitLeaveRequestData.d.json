@@ -1,0 +1,15 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/12.0.0/data-class.json",
+  "simpleName" : "SubmitLeaveRequestData",
+  "namespace" : "com.axonivy.leaveRequest.SubmitLeaveRequest",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "leaveRequest",
+    "type" : "com.axonivy.leaveRequest.LeaveRequest",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "today",
+    "type" : "java.time.LocalDate",
+    "modifiers" : [ "PERSISTENT" ]
+  } ]
+}

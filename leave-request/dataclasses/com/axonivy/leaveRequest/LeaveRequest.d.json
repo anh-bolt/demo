@@ -1,0 +1,71 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/13.2.0/data-class.json",
+  "simpleName" : "LeaveRequest",
+  "namespace" : "com.axonivy.leaveRequest",
+  "fields" : [ {
+    "name" : "requestId",
+    "type" : "String",
+    "modifiers" : [ ],
+    "comment" : "UUID, generated on submit"
+  }, {
+    "name" : "employeeId",
+    "type" : "String",
+    "modifiers" : [ ],
+    "comment" : "Session user member name"
+  }, {
+    "name" : "employeeName",
+    "type" : "String",
+    "modifiers" : [ ],
+    "comment" : "Session user full name"
+  }, {
+    "name" : "employeeEmail",
+    "type" : "String",
+    "modifiers" : [ ],
+    "comment" : "Session user email"
+  }, {
+    "name" : "leaveType",
+    "type" : "com.axonivy.leaveRequest.model.LeaveType",
+    "modifiers" : [ ],
+    "comment" : "Type of leave"
+  }, {
+    "name" : "startDate",
+    "type" : "java.time.LocalDate",
+    "modifiers" : [ ],
+    "comment" : "First day of leave"
+  }, {
+    "name" : "endDate",
+    "type" : "java.time.LocalDate",
+    "modifiers" : [ ],
+    "comment" : "Last day of leave"
+  }, {
+    "name" : "numberOfDays",
+    "type" : "int",
+    "modifiers" : [ ],
+    "comment" : "Calculated: endDate - startDate + 1"
+  }, {
+    "name" : "reason",
+    "type" : "String",
+    "modifiers" : [ ],
+    "comment" : "Reason for leave, max 500 chars"
+  }, {
+    "name" : "status",
+    "type" : "com.axonivy.leaveRequest.model.LeaveStatus",
+    "modifiers" : [ ],
+    "comment" : "Current status of the request"
+  }, {
+    "name" : "createdDate",
+    "type" : "java.time.LocalDateTime",
+    "modifiers" : [ ],
+    "comment" : "Timestamp of submission"
+  }, {
+    "name" : "lineManagerComment",
+    "type" : "String",
+    "modifiers" : [ ],
+    "comment" : "Comment by Line Manager (required on reject)"
+  }, {
+    "name" : "departmentManagerComment",
+    "type" : "String",
+    "modifiers" : [ ],
+    "comment" : "Comment by Department Manager (required on reject)"
+  } ]
+}

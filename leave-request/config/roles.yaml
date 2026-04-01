@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://json-schema.axonivy.com/14.0-dev/config/roles.json
+Roles:
+  LeaveRequest:
+  Employees:
+    parent: LeaveRequest
+  LineManagers:
+    parent: LeaveRequest
+  DepartmentManagers:
+    parent: LeaveRequest

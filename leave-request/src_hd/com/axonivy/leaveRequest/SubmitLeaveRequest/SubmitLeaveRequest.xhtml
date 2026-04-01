@@ -1,0 +1,118 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:ic="http://ivyteam.ch/jsf/component" xmlns:p="http://primefaces.org/ui"
+  xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+  <ui:composition template="/layouts/frame.xhtml">
+    <ui:define name="title">#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/title')}</ui:define>
+    <ui:define name="content">
+      <div class="card">
+        <h:form id="form" styleClass="p-fluid">
+
+          <div class="col-12">
+            <p:messages id="form-messages" showDetail="true" />
+          </div>
+
+          <h3>#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/title')}</h3>
+
+          <!-- Employee Information Section (read-only) -->
+          <p:fieldset legend="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/employeeInfo')}" styleClass="mb-4">
+            <div class="grid">
+              <div class="col-12 md:col-4">
+                <div class="field">
+                  <p:outputLabel for="employee-id" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/employeeId')}" styleClass="font-semibold" />
+                  <p:inputText id="employee-id" value="#{data.leaveRequest.employeeId}" disabled="true" styleClass="w-full" />
+                </div>
+              </div>
+              <div class="col-12 md:col-4">
+                <div class="field">
+                  <p:outputLabel for="employee-name" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/employeeName')}" styleClass="font-semibold" />
+                  <p:inputText id="employee-name" value="#{data.leaveRequest.employeeName}" disabled="true" styleClass="w-full" />
+                </div>
+              </div>
+              <div class="col-12 md:col-4">
+                <div class="field">
+                  <p:outputLabel for="employee-email" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/employeeEmail')}" styleClass="font-semibold" />
+                  <p:inputText id="employee-email" value="#{data.leaveRequest.employeeEmail}" disabled="true" styleClass="w-full" />
+                </div>
+              </div>
+            </div>
+          </p:fieldset>
+
+          <!-- Leave Details Section (editable) -->
+          <p:fieldset legend="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/leaveDetails')}" styleClass="mb-4">
+            <div class="grid">
+              <div class="col-12 md:col-6">
+                <div class="field">
+                  <p:outputLabel for="leave-type" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/leaveType')}" styleClass="font-semibold" />
+                  <p:selectOneMenu id="leave-type" value="#{data.leaveRequest.leaveType}" required="true"
+                    requiredMessage="Leave type is required" styleClass="w-full">
+                    <f:selectItem itemLabel="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/selectLeaveType')}" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItem itemLabel="#{ivy.cms.co('/Labels/LeaveType/ANNUAL_LEAVE')}" itemValue="ANNUAL_LEAVE" />
+                    <f:selectItem itemLabel="#{ivy.cms.co('/Labels/LeaveType/SICK_LEAVE')}" itemValue="SICK_LEAVE" />
+                    <f:selectItem itemLabel="#{ivy.cms.co('/Labels/LeaveType/UNPAID_LEAVE')}" itemValue="UNPAID_LEAVE" />
+                    <f:selectItem itemLabel="#{ivy.cms.co('/Labels/LeaveType/PARENTAL_LEAVE')}" itemValue="PARENTAL_LEAVE" />
+                    <f:selectItem itemLabel="#{ivy.cms.co('/Labels/LeaveType/BEREAVEMENT_LEAVE')}" itemValue="BEREAVEMENT_LEAVE" />
+                    <f:selectItem itemLabel="#{ivy.cms.co('/Labels/LeaveType/OTHER')}" itemValue="OTHER" />
+                  </p:selectOneMenu>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-6">
+                <div class="field">
+                  <p:outputLabel for="number-of-days" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/numberOfDays')}" styleClass="font-semibold" />
+                  <p:inputText id="number-of-days" value="#{data.leaveRequest.numberOfDays}" disabled="true" styleClass="w-full" />
+                </div>
+              </div>
+
+              <div class="col-12 md:col-6">
+                <div class="field">
+                  <p:outputLabel for="start-date" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/startDate')}" styleClass="font-semibold" />
+                  <p:datePicker id="start-date" value="#{data.leaveRequest.startDate}" required="true"
+                    requiredMessage="Start date is required" showIcon="true" pattern="dd.MM.yyyy"
+                    mindate="#{data.today}">
+                    <p:ajax event="dateSelect" listener="#{logic.calculateDays}" update="end-date number-of-days" />
+                  </p:datePicker>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-6">
+                <div class="field">
+                  <p:outputLabel for="end-date" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/endDate')}" styleClass="font-semibold" />
+                  <p:datePicker id="end-date" value="#{data.leaveRequest.endDate}" required="true"
+                    requiredMessage="End date is required" showIcon="true" pattern="dd.MM.yyyy"
+                    mindate="#{data.leaveRequest.startDate ne null ? data.leaveRequest.startDate : data.today}">
+                    <p:ajax event="dateSelect" listener="#{logic.calculateDays}" update="number-of-days" />
+                  </p:datePicker>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="field">
+                  <p:outputLabel for="reason" value="#{ivy.cms.co('/Dialogs/com/axonivy/leaveRequest/SubmitLeaveRequest/reason')}" styleClass="font-semibold" />
+                  <p:inputTextarea id="reason" value="#{data.leaveRequest.reason}" required="true"
+                    requiredMessage="Reason is required" maxlength="500" rows="3" styleClass="w-full"
+                    counter="reason-counter" counterTemplate="{0} characters remaining" />
+                  <h:outputText id="reason-counter" />
+                </div>
+              </div>
+            </div>
+          </p:fieldset>
+
+          <!-- Action Buttons -->
+          <div class="grid mt-3">
+            <div class="col-12 text-right">
+              <p:commandLink id="cancel" actionListener="#{logic.cancel}" process="@this"
+                value="#{ivy.cms.co('/Labels/Cancel')}" styleClass="ui-button-secondary mr-2" />
+              <p:commandButton id="submit" actionListener="#{logic.submit}"
+                value="#{ivy.cms.co('/Labels/Submit')}" update="form" icon="si si-check-1"
+                styleClass="ui-button-primary" />
+            </div>
+          </div>
+
+        </h:form>
+      </div>
+    </ui:define>
+  </ui:composition>
+</h:body>
+</html>

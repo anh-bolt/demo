@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn clean install -f leave-request/pom.xml)",
+      "Bash(mvn clean install -f leave-request/pom.xml -Divy.engine.validate.skip=true)"
+    ]
+  }
+}
