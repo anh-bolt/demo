@@ -3,6 +3,16 @@ name: axon-ivy-workflow-guide
 description: Step-by-step guide for creating complete Axon Ivy workflow processes. Use this skill FIRST when building new workflows.
 ---
 
+## Coding Standards (MUST follow)
+
+Every artifact produced through this skill — Java, `.p.json`, `.xhtml`, CMS YAML, config — MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md). Apply automatically; do not wait to be asked.
+
+Pay special attention to:
+- **Layered process modeling** — keep the business layer coarse (verb-noun names); push services, DB/REST calls, and technical logging into the technical layer.
+- **Naming** — processes `VerbNoun`, sub-processes `Feature_Action`, dialogs reflect the use case (never `Dialog1`).
+- **Logging** — parameterized SLF4J / `ivy.log`, never string concatenation, never PII/secrets.
+- **CMS** — access via enum/constant keys, organized under `/messages`, `/errors`, `/ui`, `/templates`, `/email`.
+
 ## When to Use
 
 Use this skill when:
@@ -32,18 +42,26 @@ Create master data in `dataclasses/package/`:
 - [ ] Create `.d.json` file with workflow state fields
 - [ ] Include main entity and temp entity (for AI operations)
 
-### Step 3: Design Process Flow
+### Step 3: Design Process Flow (Layered)
 
 **Skill:** `axon-ivy-process`
+
+Follow the **three-layer** approach from the coding rules — never collapse layers.
+
+| Layer | Lives in | Contains |
+|-------|----------|----------|
+| **Business** | `processes/<feature>/<VerbNoun>.p.json` | Coarse steps named by intent (`ValidateRequest`, `ApproveLeave`) |
+| **Detail** | `processes/<feature>/sub/<Feature_Action>.p.json` | Sub-processes decomposing each business step |
+| **Technical** | `processes/<feature>/tech/` or Script/ProgramInterface nodes | Concrete service/DB/REST calls, error boundaries, logging |
 
 Create process in `processes/package/`:
 
 - [ ] RequestStart with signature
-- [ ] TaskSwitchEvent for each human task
-- [ ] DialogCall for each UI screen
-- [ ] Script nodes for business logic
-- [ ] Alternative nodes for conditions
-- [ ] TaskEnd for completion
+- [ ] Business-layer activities named by intent (verb-noun), NOT by implementation (no `CallXxxService`)
+- [ ] Detail-layer sub-processes prefixed with feature (`Leave_Validate`, `Leave_Notify`)
+- [ ] Technical-layer scripts / `ProgramInterface` nodes contain the logging + error handling
+- [ ] Alternative nodes for conditions (labeled, null-safe)
+- [ ] TaskEnd for every terminal path
 
 ### Step 4: Create Managed Beans (if needed)
 

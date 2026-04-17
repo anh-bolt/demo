@@ -3,6 +3,15 @@ name: axon-ivy-requirements-creation
 description: Generate detailed requirements and implementation stories from simple user input. Use when a user provides vague requirements, needs a structured requirements document, or wants to create implementation stories.
 ---
 
+## Coding Standards Alignment
+
+Stories produced by this skill WILL be implemented through skills that enforce [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md). When writing stories, keep the rules in mind so acceptance criteria are achievable:
+
+- Split work by **layer** — data model → entity/repository (technical) → detail sub-processes → business process → UI. Don't bundle business + technical concerns in one story.
+- Name stories and artifacts **by intent** — `ApproveLeave`, never `CallLeaveService`.
+- Include acceptance criteria for **CMS externalization** (no hardcoded UI strings) and **structured logging** (no concatenation, no PII) where those artifacts are in scope.
+- Specify enums for any fixed-choice field (status, error code, role).
+
 ## When to Use
 
 Use this skill when:

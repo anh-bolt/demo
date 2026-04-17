@@ -3,6 +3,15 @@ name: axon-ivy-custom-fields
 description: Define custom fields in custom-fields.yaml for tasks, cases, and process starts. Use when working with custom metadata on workflow elements.
 ---
 
+## Coding Standards (MUST follow)
+
+Custom fields MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md):
+
+- **Field names** — descriptive camelCase English (`employeeFullName`, `departmentCode`); never `field1`, `tmp`, `x`.
+- **Group related fields with the `Category`** attribute — matches the grouped-namespace principle from rule §5.
+- **Never store secrets / PII** in custom fields — they are visible in Portal task lists.
+- **`Label` and `Description`** are user-visible → eligible for CMS externalization when multi-language Portal is configured.
+
 ## When to Use
 
 - Creating TaskSwitchEvent or RequestStart elements that need custom metadata

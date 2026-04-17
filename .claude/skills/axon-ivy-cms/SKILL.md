@@ -4,6 +4,15 @@ name: axon-ivy-cms
 description: Create and manage CMS (Content Management System) content — multi-language YAML files, binary content (files), and Portal CMS overrides.
 ---
 
+## Coding Standards (MUST follow)
+
+All CMS content MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md) section 7:
+
+- **Folder organization by purpose** — `/messages`, `/errors`, `/ui`, `/templates`, `/email`. Never mix technical error strings with user-facing UI text.
+- **Access via enum / centralized constants** when invoked from Java — e.g., `CmsMessageKey.ERROR_CUSTOMER_NOT_FOUND` — never scatter ad-hoc string literals through the code.
+- **Placeholders, not concatenation** — use `{0}`, `{1}` so translators see the full sentence: `errors.customer.notFound = Customer with ID {0} not found.`
+- **English is the reference language**; every new key must also be added (translated) to every supported locale file.
+
 ## When to Use
 
 - Adding UI labels or translations for dialogs/processes

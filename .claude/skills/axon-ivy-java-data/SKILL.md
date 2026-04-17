@@ -3,6 +3,18 @@ name: axon-ivy-java-data
 description: Rules and patterns for Java model classes, enums, DTOs, and persistence (Ivy.repo() or JPA/SQL) in Axon Ivy projects.
 ---
 
+## Coding Standards (MUST follow)
+
+All Java models, enums, and DTOs MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md):
+
+- **One top-level public type per file**; filename matches the type.
+- **No wildcard imports** (`java.util.*` forbidden).
+- **Role-based packages** — `model/`, `dto/`, `repository/`, `service/`, `rest/`, `ui/`.
+- **Spaces, ≤120 cols, K&R braces, always brace single-statement blocks.**
+- **Javadoc** on public APIs and non-trivial public methods; explain *why*, not *what*.
+- **Enums** over magic strings or int constants for conceptual sets; UPPER_SNAKE_CASE values.
+- **Bean validation** (`jakarta.validation`) on DTOs/entities; validate at process boundaries.
+
 ## Use Together With
 
 - `axon-ivy-repository` - For persistence with Ivy.repo()
@@ -17,37 +29,64 @@ description: Rules and patterns for Java model classes, enums, DTOs, and persist
 
 ## Java Model Pattern
 
-**File:** `src/package/model/Entity.java`
+**File:** `src/com/example/customer/model/Customer.java` — one public type per file; role-based package.
 
 ```java
-package package.model;
+package com.example.customer.model;
 
 import java.util.UUID;
 
-public class Entity {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+/**
+ * Customer aggregate. Immutable identity, mutable descriptive fields.
+ *
+ * <p>Validated at process boundaries (REST controllers, process starts) via
+ * the {@code jakarta.validation} annotations on its fields.
+ */
+public class Customer {
 
   private String id;
-  private String name;
-  private EntityStatus status;
 
-  public Entity() {
+  @NotBlank
+  @Size(max = 120)
+  private String name;
+
+  private CustomerStatus status;
+
+  public Customer() {
     this.id = UUID.randomUUID().toString();
-    this.status = EntityStatus.NEW;
+    this.status = CustomerStatus.NEW;
   }
 
-  // Getters and Setters
-  public String getId() { return id; }
-  public void setId(String id) { this.id = id; }
+  public String getId() {
+    return id;
+  }
 
-  public String getName() { return name; }
-  public void setName(String name) { this.name = name; }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-  public EntityStatus getStatus() { return status; }
-  public void setStatus(EntityStatus status) { this.status = status; }
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public CustomerStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(CustomerStatus status) {
+    this.status = status;
+  }
 
   @Override
   public String toString() {
-    return "Entity [id=" + id + ", name=" + name + "]";
+    return "Customer[id=" + id + ", status=" + status + "]";
   }
 }
 ```

@@ -200,3 +200,46 @@ RIGHT (all connections labeled):
     { "id": "c3", "to": "f4", "label": { "name": "Rejected" } }
   ]
 ```
+
+### 14. Coding-standards compliance ([.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md))
+
+Scan every element name and Script body in the file.
+
+**14.1 Naming — verb-noun and intent-based**
+
+Process / element names MUST describe business intent, not the implementation. Reject names that expose transport or persistence detail.
+
+```
+WRONG: "name": "CallLoanService"         (exposes transport)
+WRONG: "name": "UpdateLoanStatusDB"      (exposes storage)
+WRONG: "name": "Dialog1" / "tmp" / "s2"  (not descriptive)
+RIGHT: "name": "ApproveLoan"
+RIGHT: "name": "Customer_UpdateAddress"  (sub-process, feature-prefixed)
+```
+
+Rule §5. Sub-processes use `Feature_Action`. Top-level processes use `VerbNoun`.
+
+**14.2 Layered process modeling**
+
+- Business-layer `.p.json` files (under `processes/<feature>/`) MUST NOT contain inline service calls, DB access, or REST invocations. Those belong to `ProgramInterface` / Script nodes inside **technical-layer** sub-processes.
+- If a Script body directly invokes a repository method, opens a file, or calls a REST client, flag it and recommend moving the call to a technical sub-process.
+
+**14.3 Script logging — parameterized, no secrets**
+
+Scan every `Script` element's `output.code` for `ivy.log.*` calls.
+
+```
+WRONG: ivy.log.info("Processing employee: " + in.employee.getName());   // concatenation
+WRONG: ivy.log.info("Payload: " + in.loginRequest);                     // PII / password leak
+RIGHT: ivy.log.info("Processing employee {}, caseId={}", in.employee.getId(), ivy.case.getId());
+```
+
+Never log passwords, tokens, secrets, full credit-card numbers, or raw DTOs that contain them. Always include a correlation / case ID when available.
+
+**14.4 Exception handling — preserve the cause, map to a stable error code**
+
+Scan `Script` bodies and `ErrorBoundaryEvent` output mappings:
+
+- When rethrowing: `throw new X("message", cause);` — MUST pass the original cause; never swallow.
+- User-facing messages shown to the process UI MUST come from CMS (e.g., `ivy.cms.co("/errors/leave/NotFound")`), not hardcoded English.
+- Do not use exceptions for control flow — use an `Alternative` instead.

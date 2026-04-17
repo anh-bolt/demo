@@ -3,6 +3,17 @@ name: axon-ivy-process
 description: Rules and patterns for creating and editting Axon Ivy workflow processes (.p.json files).
 ---
 
+## Coding Standards (MUST follow)
+
+Every process MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md):
+
+- **Verb-noun process names** — `ApproveLeave`, `CreateCustomer`. Never `CallXxxService` or `UpdateXxxDB`.
+- **Sub-processes** prefixed with feature — `Leave_Validate`, `Customer_UpdateAddress`.
+- **Three layers** — keep the top-level `.p.json` at the **business layer**; push services/DB/REST calls into **technical-layer** Script/`ProgramInterface` nodes. Never call a low-level service directly from a business-layer activity.
+- **Element names** describe business intent, not the implementation.
+- **Logging** inside Script nodes — use parameterized `ivy.log.info("... {}", value)`, never string concatenation; never log PII or secrets.
+- **Exception handling** — distinguish business vs technical errors, always preserve the root cause, surface user-friendly messages (via CMS) and log technical detail backend-only.
+
 ## Schema Reference
 
 See `axon-ivy-process-schema-14.0-dev/` folder for JSON schemas:

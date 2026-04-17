@@ -3,6 +3,15 @@ name: axon-ivy-config
 description: Provide information and rules for Axon Ivy variables configurations. Use when wokring with Axon Ivy variable.
 ---
 
+## Coding Standards (MUST follow)
+
+Variables MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md) section 5.5:
+
+- **Grouped namespaces** — `<feature>.<area>.<setting>` (e.g., `Notification.EmailSender`, `Customer.MaxRetries`). Never flat scalars like `maxRetries` or `url1`.
+- **Passwords, tokens, secrets** — declare with `# [type: Password]` so the value is encrypted and hidden; never commit a cleartext secret.
+- **Environment-specific values** — use `[default]` + `[production]` / `[staging]` overrides, never hardcode host names per environment.
+- **Descriptive names in English** — no abbreviations outside `URL`, `id`, `HTTP`.
+
 ## Configuration Files
 
 `config/variables.yaml` : Environment variables

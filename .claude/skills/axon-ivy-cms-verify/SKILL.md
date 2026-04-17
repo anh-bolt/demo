@@ -6,6 +6,8 @@ description: Verification checklist for Axon Ivy CMS files (cms_*.yaml). MUST be
 
 **MANDATORY**: Run this checklist on EVERY `cms_*.yaml` file after creating or modifying it with the `axon-ivy-cms` skill. Read each CMS file, then verify each check below. Fix any violations before considering the task done.
 
+Also enforces the CMS rules from [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md) section 7.
+
 ## Checklist
 
 ### 1. YAML Boolean Keys — `Yes`, `No`, `On`, `Off`, `True`, `False` must be quoted
@@ -199,4 +201,63 @@ Labels:
 ```
 
 Exception: Double quotes are needed for escape sequences like `\n` (newline).
+
+### 11. Folder purpose — no mixing UI text with technical errors
+
+CMS content MUST be organized by purpose. Never put a backend/technical error message inside a `Dialogs:` or `Labels:` namespace that is surfaced as friendly UI text, and never put user-facing UI copy inside an `errors:` / `messages:` namespace intended for technical codes.
+
+```yaml
+# WRONG — technical detail leaked into a button label
+Dialogs:
+  hr:
+    leaveRequest:
+      SubmitButton: "NullPointerException at LeaveService.submit(line 42)"
+
+# RIGHT — dedicated purpose-based namespaces
+Dialogs:
+  hr:
+    leaveRequest:
+      SubmitButton: Submit
+errors:
+  leave:
+    saveFailed: "Could not save leave request {0}. Please try again."
+```
+
+Rule §7 (Axon Ivy coding rules): keep `/messages`, `/errors`, `/ui`, `/templates`, `/email` separate.
+
+### 12. Placeholders `{0}`, `{1}` — NEVER string concatenation at the call site
+
+Messages with dynamic content MUST use positional placeholders so the whole sentence is translatable.
+
+```yaml
+# WRONG — forces the Java caller to concatenate, breaking non-English translations
+errors:
+  customer:
+    notFoundPrefix: "Customer with ID "
+    notFoundSuffix: " not found."
+
+# RIGHT — one message with placeholders, translatable as a whole
+errors:
+  customer:
+    notFound: "Customer with ID {0} not found."
+```
+
+```java
+// Corresponding Java access — still pulled via an enum / constant, not a string literal
+String msg = Ivy.cms().co(CmsMessageKey.ERROR_CUSTOMER_NOT_FOUND.getKey(),
+                          java.util.List.of(customerId));
+```
+
+### 13. Java callers access CMS via enum / constant, not ad-hoc string literals
+
+Scan the Java side (not the YAML) for every `Ivy.cms().co("...")` and `ivy.cms.co("...")`. The first argument should be an enum value or a named constant (see `CmsMessageKey` pattern in rule §7). Flag bare string literals used for the same key in multiple places — they should be lifted into an enum.
+
+```java
+// WRONG — literal keys scattered everywhere
+Ivy.cms().co("/errors/customer/notFound");
+Ivy.cms().co("/errors/customer/notFound");   // duplicated literal
+
+// RIGHT — one source of truth
+Ivy.cms().co(CmsMessageKey.ERROR_CUSTOMER_NOT_FOUND.getKey());
+```
 ````

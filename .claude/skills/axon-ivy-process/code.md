@@ -78,11 +78,29 @@ in.employee.setCaseId(ivy.case.getId());
 
 ### Logging
 
+Follow [`.claude/rules/axon-ivy-coding.md`](../../rules/axon-ivy-coding.md) section 6: **parameterized calls only**, never string concatenation; include the case / process instance ID as correlation; never log PII, passwords, or secrets.
+
 ```java
+// CORRECT — parameterized, includes correlation ID
+ivy.log.info("Processing employee {}, caseId={}", in.employee.getId(), ivy.case.getId());
+ivy.log.debug("Employee state={}, dept={}", in.employee.getStatus(), in.employee.getDepartment());
+ivy.log.error("Failed to process caseId={}: {}", ivy.case.getId(), exception.getMessage(), exception);
+
+// WRONG — string concatenation (rule §6, Logging)
 ivy.log.info("Processing employee: " + in.employee.getName());
-ivy.log.debug("Employee ID: " + in.employee.getId());
-ivy.log.error("Failed to process: " + exception.getMessage());
+
+// WRONG — leaks PII / credentials
+ivy.log.info("Login payload: {}", in.loginRequest);  // contains password!
 ```
+
+Log level guide (rule §6):
+
+| Level | When |
+|-------|------|
+| `error` | Operation failed; investigation needed |
+| `warn`  | Unexpected state; flow continues |
+| `info`  | Business events, state transitions |
+| `debug` | Technical troubleshooting detail |
 
 ### Date and Time Handling
 

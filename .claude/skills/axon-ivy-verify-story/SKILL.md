@@ -4,7 +4,7 @@ name: axon-ivy-verify-story
 description: Verify story implementation by checking acceptance criteria, loading verify parts from other skills, and validating UI behavior (field interactions, disable/enable, show/hide, validations).
 ---
 
-**MANDATORY**: Run this skill after implementing each story via `axon-ivy-implement-story`. This skill orchestrates all verification — both artifact-specific checks (delegated to other verify skills) and behavioral/UI checks unique to this skill.
+**MANDATORY**: Run this skill after implementing each story via `axon-ivy-implement-story`. This skill orchestrates all verification — both artifact-specific checks (delegated to other verify skills), behavioral/UI checks, and **coding-standards compliance** ([.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md)).
 
 ## Verification Workflow
 
@@ -153,6 +153,52 @@ Verify form actions match the story specification:
 - [ ] **Grid layout** uses PrimeFlex (`grid`, `col-12`, `col-6`, etc.)
 - [ ] **Form sections** match the story's layout description (tabs, accordion, panels)
 - [ ] **Labels** use CMS references, not hardcoded strings (cross-check with `axon-ivy-cms-verify`)
+
+---
+
+## Phase 5: Coding-Standards Compliance
+
+**Source: [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md)**. Run these checks on every implementation, regardless of story type.
+
+### 5.1 Java files (`.java`)
+
+- [ ] **One public top-level type per file**; filename matches the type name
+- [ ] **No wildcard imports** (`java.util.*`, `jakarta.persistence.*`)
+- [ ] **Role-based package** — file lives under `model/`, `dto/`, `repository/`, `service/`, `rest/`, `ui/`, or `managedbean/`
+- [ ] **K&R braces, spaces, ≤120 cols**, single-statement blocks are always braced
+- [ ] **Javadoc** on every public API / non-trivial public method (explains *why*, not *what*)
+- [ ] **Enums used** for fixed conceptual sets (status, role, error-code), not magic strings / ints
+- [ ] **Bean validation** (`jakarta.validation`) on DTOs and entity fields; validated at the boundary
+- [ ] **Logging is SLF4J parameterized** — `LOG.info("… {}", value)`, never `LOG.info("…" + value)`
+- [ ] **No PII / secrets / full credit-card numbers in logs** — scan for password, token, secret, creditCard, ssn, iban
+- [ ] **Exceptions preserve the cause** (`throw new X("…", cause)`); business vs technical distinguished; stable error codes
+
+### 5.2 Processes (`.p.json`)
+
+- [ ] **Verb-noun process names** (`ApproveLeave`, not `CallLoanService`)
+- [ ] **Sub-processes feature-prefixed** (`Leave_Validate`)
+- [ ] **Layered** — top-level business process contains no inline service/DB/REST calls; those live in technical-layer sub-processes
+- [ ] **Script `ivy.log.*` calls are parameterized**, no PII in payloads
+- [ ] Run `axon-ivy-process-verify` — includes deeper coding-rule checks (section 14)
+
+### 5.3 Dialogs (`.xhtml`)
+
+- [ ] **Dialog ID reflects the use case** (`leaveApprovalForm`, never `Dialog1` / `ScreenX`)
+- [ ] **Every user-visible string** resolves through `#{ivy.cms.co('...')}` — no hardcoded English in markup
+- [ ] **Field-level validation messages** come from CMS, reference a stable error code
+
+### 5.4 CMS (`cms_*.yaml`)
+
+- [ ] **Folder hierarchy by purpose** — `/Labels`, `/Dialogs`, `/Email`, `/errors`, `/messages`, `/ui`, `/templates` — never mixing technical errors with user-facing UI
+- [ ] **Placeholders, not concatenation** — `"Customer {0} not found"`, not `"Customer " + id + " not found"`
+- [ ] **English reference + all supported locales** have identical keys (cross-checked by `axon-ivy-cms-verify`)
+- [ ] **Java callers access CMS via enum/constants**, not ad-hoc string literals scattered across classes
+
+### 5.5 Naming (cross-artifact)
+
+- [ ] **English identifiers** — no non-English names, no throwaway names (`tmp`, `data2`, `s1`)
+- [ ] **Descriptive over short** — accept universal abbreviations (`id`, `URL`, `HTTP`) only
+- [ ] **Global variables** use grouped namespaces — `global.config.<feature>.<setting>`
 
 ---
 

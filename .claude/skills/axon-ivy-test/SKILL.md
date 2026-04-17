@@ -3,6 +3,16 @@ name: axon-ivy-test
 description: Entry point for creating and update tests. Use this skill when user asks to write/update/delete tests.
 ---
 
+## Coding Standards (MUST follow)
+
+Test classes MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md):
+
+- **Test class name** = `Test<ClassUnderTest>` or `Test<ProcessName>`; one public class per file.
+- **Method names** use `should_<expectedBehavior>_when_<condition>` or `<condition>_<expectedBehavior>` — descriptive, English.
+- **No wildcard imports**; role-based test packages mirror production (`service`, `rest`, `repository`).
+- **Never log secrets or production PII**; use synthetic fixtures.
+- **Assertions with AssertJ** are preferred (load `assert.md`); distinguish business-rule assertions from technical assertions.
+
 ## Step 1: Check Project Setup
 
 **Check if `src_test/` folder exists and `pom.xml` has test dependency.**

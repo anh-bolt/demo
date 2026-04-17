@@ -3,6 +3,16 @@ name: axon-ivy-html
 description: Rules and best practices for Axon Ivy HTML Dialog implementations including PrimeFaces, PrimeFlex, CSS, JS, and Ivy components.
 ---
 
+## Coding Standards (MUST follow)
+
+Every dialog artifact — XHTML, managed bean, dialog logic process, CSS/JS — MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md):
+
+- **Dialog names reflect the use case** — `customerEditDialog`, `leaveApprovalForm`. Never `Dialog1`, `ScreenX`, `View2`.
+- **All user-visible strings come from CMS** (via `#{ivy.cms.co('...')}`) — no hardcoded English in XHTML. See section 7.
+- **Bean validation** on any form-backing object (`jakarta.validation` annotations); validate early at the dialog boundary.
+- **Managed beans** follow Java rules — one public type per file, no wildcard imports, Javadoc on public methods, role-based packages (`managedbean/`, `converter/`, `validator/`).
+- **Logging inside beans** uses SLF4J parameterized calls (`LOG.info("… {}", value)`), never string concatenation; never log form payloads containing PII.
+
 ## Creating a New HTML Dialog
 
 When asked to create, implement, or build an HTML Dialog:

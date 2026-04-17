@@ -3,6 +3,15 @@ name: axon-ivy-data
 description: Rules and patterns for Axon Ivy data classes (.d.json files).
 ---
 
+## Coding Standards (MUST follow)
+
+All data classes MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md):
+
+- **Naming** — `simpleName` is PascalCase, `namespace` is lowercase reverse-domain + feature (`com.company.myapp.customer`).
+- **Field names** — descriptive English camelCase; no abbreviations outside `id`/`URL`/`HTTP`.
+- **Types** — prefer enums over magic strings; domain types (`LocalDate`, `BigDecimal`, entity classes) over `String`.
+- **Comments** — use the `comment` field on any non-trivial field; explain *why*, not *what*.
+
 ## Use Together With
 
 - `axon-ivy-workflow-guide` - Step-by-step workflow creation

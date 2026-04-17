@@ -2,6 +2,16 @@
 
 Use this skill when creating AI-powered data extraction or processing in Axon Ivy workflows.
 
+## Coding Standards (MUST follow)
+
+AI extraction artifacts MUST comply with [.claude/rules/axon-ivy-coding.md](../../rules/axon-ivy-coding.md):
+
+- **AI extraction sits in the technical layer** — never call an LLM from a business-layer `.p.json`. Wrap it in a `CALLABLE_SUB` named `Feature_ExtractXxx` and invoke from a business-layer step named by intent (e.g., `ExtractCandidate`).
+- **Java model classes for AI results** — one public class per file, `model/` package, no wildcard imports, `@Description` on every field (helps the LLM *and* future readers).
+- **Never put secrets or PII in prompts, system messages, or logs** — if the input may contain sensitive data, redact before logging.
+- **Wrapper classes for list results** — the rule against ambiguous types aligns with "enums / strong types over magic strings" (rule §3.4).
+- **Error boundaries** must map technical AI failures to a stable business-facing `ErrorCode` and a CMS-backed user message.
+
 ## Prerequisites Check
 
 ### Step 1: Check pom.xml for Smart Workflow Dependency
